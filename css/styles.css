@@ -49,7 +49,7 @@ p {
 
 /* ---- Layout Rules ---- */
 main {
-  margin: 10vh 1em 10vh;
+  margin: 10vh 0;
 }
 
 .main-hero {
