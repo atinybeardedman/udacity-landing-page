@@ -34,22 +34,22 @@ function isVisible(element) {
     return rect.top <= 200 && rect.top >= -200;
 }
 
-function scrollToSection(section){
+function scrollToSection(section) {
     section.scrollIntoView({
         behavior: 'smooth'
     });
 }
 
-function hideNav(){
+function hideNav() {
     header.classList.add('hidden');
 }
 
-function showNav(){
+function showNav() {
     header.classList.remove('hidden');
 }
 
-function toggleTopButton(){
-    if(window.scrollY > window.innerHeight){
+function toggleTopButton() {
+    if (window.scrollY > window.innerHeight) {
         topButton.classList.remove('hidden');
     } else {
         topButton.classList.add('hidden');
@@ -63,7 +63,7 @@ function toggleTopButton(){
  */
 
 // build the nav from the sections
-function buildNav(){
+function buildNav() {
     const frag = document.createDocumentFragment();
     for (const section of sections) {
         const anchor = document.createElement('a');
@@ -93,16 +93,20 @@ function updateActiveSection() {
     }
 }
 
-function onScroll(){
-    hideNav();
+function onScroll() {
+    showNav();
     updateActiveSection();
     toggleTopButton();
-    setTimeout(showNav, 1000);
+    setTimeout(() => {
+        if(window.scrollY > 0){
+            hideNav()
+        }
+    }, 2000);
 }
 
 
 // call inital functions (deferred until after DOM content via html attribute)
-buildNav(); 
+buildNav();
 
 
 /**
@@ -116,7 +120,7 @@ buildNav();
 // handle all clicks on the navList
 navList.addEventListener('click', (event) => {
     // only try to scroll if the event was dispatched from an <a>
-    if(event.target.nodeName === 'A'){
+    if (event.target.nodeName === 'A') {
         event.preventDefault();
         const anchor = event.target;
         const section = sectionsArray.find(section => section.id === anchor.dataset.target);
@@ -126,6 +130,7 @@ navList.addEventListener('click', (event) => {
 
 // handle all scroll events together
 document.addEventListener('scroll', onScroll);
+
 
 // add click listener for back to top button
 topButton.addEventListener('click', () => {
