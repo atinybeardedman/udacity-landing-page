@@ -97,6 +97,13 @@ section {
   border-bottom-color: #333;
 }
 
+@media(max-width:500px){
+  .navbar__menu ul{
+    justify-content: space-evenly;
+    font-size: 0.9rem;
+  }
+}
+
 /* Header Styles */
 .page__header {
   background: #fff;
