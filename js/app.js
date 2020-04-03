@@ -21,7 +21,8 @@
 const sections = document.querySelectorAll('section');
 const sectionsArray = [...sections];
 const navList = document.querySelector('#navbar__list');
-
+const header = document.querySelector('.page__header');
+const topButton = document.querySelector('.top__button');
 /**
  * End Global Variables
  * Start Helper Functions
@@ -31,6 +32,28 @@ const navList = document.querySelector('#navbar__list');
 function isVisible(element) {
     const rect = element.getBoundingClientRect();
     return rect.top <= 200 && rect.top >= -200;
+}
+
+function scrollToSection(section){
+    section.scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+function hideNav(){
+    header.classList.add('hidden');
+}
+
+function showNav(){
+    header.classList.remove('hidden');
+}
+
+function toggleTopButton(){
+    if(window.scrollY > window.innerHeight){
+        topButton.classList.remove('hidden');
+    } else {
+        topButton.classList.add('hidden');
+    }
 }
 
 /**
@@ -70,11 +93,13 @@ function updateActiveSection() {
     }
 }
 
-function scrollToSection(section){
-    section.scrollIntoView({
-        behavior: 'smooth'
-    });
+function onScroll(){
+    hideNav();
+    updateActiveSection();
+    toggleTopButton();
+    setTimeout(showNav, 1000);
 }
+
 
 // call inital functions (deferred until after DOM content via html attribute)
 buildNav(); 
@@ -99,4 +124,11 @@ navList.addEventListener('click', (event) => {
 })
 
 // Set sections as active
-document.addEventListener('scroll', updateActiveSection);
+document.addEventListener('scroll', onScroll);
+
+topButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+})
