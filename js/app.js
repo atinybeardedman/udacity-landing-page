@@ -40,18 +40,20 @@ function isVisible(element) {
  */
 
 // build the nav
-const frag = document.createDocumentFragment();
-for (const section of sections) {
-    const anchor = document.createElement('a');
-    anchor.href = `#${section.id}`;
-    anchor.dataset.target = section.id;
-    anchor.classList.add('menu__link');
-    anchor.textContent = section.dataset.nav;
-    const li = document.createElement('li');
-    li.appendChild(anchor);
-    frag.appendChild(li);
+function buildNav(){
+    const frag = document.createDocumentFragment();
+    for (const section of sections) {
+        const anchor = document.createElement('a');
+        anchor.href = `#${section.id}`;
+        anchor.dataset.target = section.id;
+        anchor.classList.add('menu__link');
+        anchor.textContent = section.dataset.nav;
+        const li = document.createElement('li');
+        li.appendChild(anchor);
+        frag.appendChild(li);
+    }
+    navList.appendChild(frag);
 }
-navList.appendChild(frag);
 
 // Add class 'active' to section when near top of viewport
 
@@ -74,6 +76,9 @@ function scrollToSection(section){
     });
 }
 
+// call inital functions (deferred until after DOM content via html attribute)
+buildNav(); 
+
 
 /**
  * End Main Functions
@@ -81,8 +86,8 @@ function scrollToSection(section){
  * 
  */
 
-
 // Scroll to section on link click
+
 
 navList.addEventListener('click', (event) => {
     if(event.target.nodeName === 'A'){
