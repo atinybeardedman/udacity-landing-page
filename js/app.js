@@ -62,7 +62,7 @@ function toggleTopButton(){
  * 
  */
 
-// build the nav
+// build the nav from the sections
 function buildNav(){
     const frag = document.createDocumentFragment();
     for (const section of sections) {
@@ -111,10 +111,11 @@ buildNav();
  * 
  */
 
-// Scroll to section on link click
 
 
+// handle all clicks on the navList
 navList.addEventListener('click', (event) => {
+    // only try to scroll if the event was dispatched from an <a>
     if(event.target.nodeName === 'A'){
         event.preventDefault();
         const anchor = event.target;
@@ -123,9 +124,10 @@ navList.addEventListener('click', (event) => {
     }
 })
 
-// Set sections as active
+// handle all scroll events together
 document.addEventListener('scroll', onScroll);
 
+// add click listener for back to top button
 topButton.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
