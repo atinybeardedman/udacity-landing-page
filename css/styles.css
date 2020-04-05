@@ -113,7 +113,11 @@ section {
   z-index: 5;
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s linear 0s, opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.page__header:hover {
+  opacity: 1;
 }
 
 /* Top Button Styles */
@@ -215,7 +219,7 @@ section:nth-of-type(3n) .landing__container::after {
     rgba(255, 255, 255, 0.2) 100%
   );
   position: absolute;
-  right: 0;
+  right: 5vh;
   bottom: 0;
   z-index: -5;
   width: 10vh;
@@ -263,6 +267,10 @@ section.active .landing__container::before {
 section.active .landing__container::after {
   opacity: 1;
   animation: rotate 5s linear 0s infinite forwards reverse;
+}
+
+.clear {
+  opacity: 0;
 }
 
 .hidden {

@@ -23,6 +23,9 @@ const sectionsArray = [...sections];
 const navList = document.querySelector('#navbar__list');
 const header = document.querySelector('.page__header');
 const topButton = document.querySelector('.top__button');
+let isScrolling = false;
+let lastScrollTop = 0;
+const delta = 10;
 /**
  * End Global Variables
  * Start Helper Functions
@@ -41,11 +44,11 @@ function scrollToSection(section) {
 }
 
 function hideNav() {
-    header.classList.add('hidden');
+    header.classList.add('clear');
 }
 
 function showNav() {
-    header.classList.remove('hidden');
+    header.classList.remove('clear');
 }
 
 function toggleTopButton() {
@@ -94,14 +97,26 @@ function updateActiveSection() {
 }
 
 function onScroll() {
-    showNav();
+    isScrolling = true;
     updateActiveSection();
     toggleTopButton();
-    setTimeout(() => {
-        if(window.scrollY > 0){
-            hideNav()
+    setTimeout(handleNav, 250);
+}
+
+function handleNav() {
+    if (isScrolling) {
+        isScrolling = false;
+        const currentScrollTop = window.scrollY;
+        if (Math.abs(lastScrollTop - currentScrollTop) > delta) {
+            if (currentScrollTop < lastScrollTop) {
+                // they scrolled up
+                showNav();
+            } else {
+                hideNav();
+            }
         }
-    }, 2000);
+        lastScrollTop = currentScrollTop;
+    }
 }
 
 
@@ -130,7 +145,6 @@ navList.addEventListener('click', (event) => {
 
 // handle all scroll events together
 document.addEventListener('scroll', onScroll);
-
 
 // add click listener for back to top button
 topButton.addEventListener('click', () => {
